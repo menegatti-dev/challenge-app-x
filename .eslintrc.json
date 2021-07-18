@@ -55,7 +55,8 @@
   },
   "settings": {
     "import/resolver": {
-      "typescript": {}
+      "typescript": {},
+      "babel-module": {}
     }
   }
 }
