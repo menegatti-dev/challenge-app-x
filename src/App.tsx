@@ -1,8 +1,9 @@
+import 'react-native-gesture-handler';
 import React from 'react';
 import { StatusBar } from 'react-native';
-import Home from '@/screens/Home';
 import styled, { ThemeProvider } from 'styled-components/native';
 import { theme } from '@/theme';
+import { Routes } from './routes';
 
 const SafeAreaView = styled.SafeAreaView`
   flex: 1;
@@ -14,7 +15,7 @@ const App: React.FC = () => {
     <ThemeProvider theme={theme}>
       <SafeAreaView>
         <StatusBar barStyle="light-content" />
-        <Home />
+        <Routes />
       </SafeAreaView>
     </ThemeProvider>
   );
