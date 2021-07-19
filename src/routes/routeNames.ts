@@ -1,3 +1,5 @@
 export const routeNames = {
   HOME: 'HOME',
+  CLASSIFICATION: 'CLASSIFICATION',
+  TEAMDETAILS: 'TEAMDETAILS',
 };

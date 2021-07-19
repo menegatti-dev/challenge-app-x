@@ -4,6 +4,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import { Home } from '@/screens/Home';
+import { Classification } from '@/screens/Classification';
+import { TeamDetails } from '@/screens/TeamDetails';
 import { useTheme } from 'styled-components';
 import { routeNames } from './routeNames';
 
@@ -18,6 +20,8 @@ const Routes: React.FC = () => {
         screenOptions={{ headerShown: false, cardStyle: { backgroundColor: colors.background } }}
       >
         <Stack.Screen name={routeNames.HOME} component={Home} />
+        <Stack.Screen name={routeNames.CLASSIFICATION} component={Classification} />
+        <Stack.Screen name={routeNames.TEAMDETAILS} component={TeamDetails} />
       </Stack.Navigator>
     </NavigationContainer>
   );
