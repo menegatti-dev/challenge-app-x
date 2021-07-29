@@ -3,7 +3,11 @@ import { Svg, Path, Circle } from 'react-native-svg';
 
 import { Container, Title } from './styles';
 
-const EmptyLeague: React.FC = () => {
+interface EmptyLeagueProps {
+  title: string;
+}
+
+const EmptyLeague: React.FC<EmptyLeagueProps> = ({ title }) => {
   return (
     <Container>
       <Svg
@@ -48,7 +52,7 @@ const EmptyLeague: React.FC = () => {
         <Circle cx="433.63626" cy="105.17383" r="20" fill="#246bfd" />
         <Circle cx="433.63626" cy="105.17383" r="12.18187" fill="#fff" />
       </Svg>
-      <Title>Não há nenhuma liga para a temporada selecionada</Title>
+      <Title>{title}</Title>
     </Container>
   );
 };
