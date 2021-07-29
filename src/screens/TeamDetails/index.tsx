@@ -6,6 +6,8 @@ import { Team } from '@/types/team';
 import teamJson from '@/mocks/team.json';
 
 import Header from '@/components/Header';
+import { getTeamsDetailsRequest } from '@/store/slices/team';
+import { useReduxDispatch, useReduxSelector } from '@/hooks';
 import {
   Container,
   TeamWrapper,
@@ -22,7 +24,7 @@ import {
 } from './styles';
 
 interface RouteParamsProps {
-  teamId: string;
+  teamId: number;
 }
 
 const TeamDetails: React.FC = () => {
@@ -30,15 +32,12 @@ const TeamDetails: React.FC = () => {
 
   const { teamId } = route.params as RouteParamsProps;
 
-  const [data, setData] = useState<Team>({} as Team);
+  const data = useReduxSelector(state => state.team.selectedTeam);
 
-  const loadData = () => {
-    setData({ ...teamJson.response[0] });
-  };
-
+  const dispatch = useReduxDispatch();
   useEffect(() => {
-    loadData();
-  }, []);
+    dispatch(getTeamsDetailsRequest({ teamId }));
+  }, [dispatch, teamId]);
 
   return (
     <Container>
@@ -72,7 +71,7 @@ const TeamDetails: React.FC = () => {
         </Column>
         <Column>
           <Title>Capacidade</Title>
-          <Value>{data?.venue?.capacity}</Value>
+          <Value>{data?.venue?.capacity.toLocaleString('pt-br')} pessoas</Value>
         </Column>
       </Row>
       <Row>
