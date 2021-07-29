@@ -35,7 +35,9 @@ const leagueSlice = createSlice({
       draft.loading = true;
     },
     getLeaguesDetailsSuccess: (draft, action: PayloadAction<LeagueDetails>) => {
-      const index = draft.leaguesDetails.findIndex(item => item.data.id === action.payload.id);
+      const index = draft.leaguesDetails.findIndex(
+        item => item.data.id === action.payload.id && item.data.season === action.payload.season,
+      );
 
       if (index >= 0) {
         draft.leaguesDetails[index] = { data: action.payload, lastUpdate: new Date().toString() };

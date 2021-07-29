@@ -40,7 +40,7 @@ export function* handleGetLeagueDetails(action: ReturnType<typeof getLeaguesDeta
       (state: ReduxStore) => state.league.leaguesDetails,
     );
 
-    const index = leaguesDetails.findIndex(item => item.data.id === league);
+    const index = leaguesDetails.findIndex(item => item.data.id === league && item.data.season === season);
 
     const item = leaguesDetails[index];
 
