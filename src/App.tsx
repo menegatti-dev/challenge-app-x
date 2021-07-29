@@ -7,6 +7,10 @@ import { Provider } from 'react-redux';
 import { theme } from '@/theme';
 import { Routes } from '@/routes';
 import { store } from '@/store';
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistStore } from 'redux-persist';
+
+const persistor = persistStore(store);
 
 const SafeAreaView = styled.SafeAreaView`
   flex: 1;
@@ -16,12 +20,14 @@ const SafeAreaView = styled.SafeAreaView`
 const App: React.FC = () => {
   return (
     <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <SafeAreaView>
-          <StatusBar barStyle="light-content" />
-          <Routes />
-        </SafeAreaView>
-      </ThemeProvider>
+      <PersistGate loading={null} persistor={persistor}>
+        <ThemeProvider theme={theme}>
+          <SafeAreaView>
+            <StatusBar barStyle="light-content" />
+            <Routes />
+          </SafeAreaView>
+        </ThemeProvider>
+      </PersistGate>
     </Provider>
   );
 };
