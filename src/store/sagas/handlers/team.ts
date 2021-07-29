@@ -34,6 +34,5 @@ export function* handleGetTeamDetails(action: ReturnType<typeof getTeamsDetailsR
     }
   } catch (error) {
     yield put(getTeamsDetailsFailure());
-    console.error(error);
   }
 }

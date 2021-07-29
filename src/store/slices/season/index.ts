@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import Toast from 'react-native-toast-message';
 
 interface DataWithCache<T> {
   data: T;
@@ -25,6 +26,14 @@ const seasonSlice = createSlice({
     },
     getSeasonsFailure: draft => {
       draft.loading = false;
+      Toast.show({
+        topOffset: 80,
+        type: 'error',
+        position: 'top',
+        visibilityTime: 5000,
+        text1: 'Erro ao atualizar lista de temporadas.',
+        text2: 'Verifique sua conexão com a internet e tente novamente!',
+      });
     },
   },
 });

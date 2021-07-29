@@ -18,6 +18,5 @@ export function* handleGetSeassons() {
     }
   } catch (error) {
     yield put(getSeasonsFailure());
-    console.error(error);
   }
 }

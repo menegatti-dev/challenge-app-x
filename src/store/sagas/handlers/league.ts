@@ -57,6 +57,5 @@ export function* handleGetLeagueDetails(action: ReturnType<typeof getLeaguesDeta
     }
   } catch (error) {
     yield put(getLeaguesDetailsFailure());
-    console.error(error);
   }
 }

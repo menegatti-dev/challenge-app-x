@@ -1,6 +1,7 @@
 import { League } from '@/types/league';
 import { LeagueDetails } from '@/types/leagueDetails';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import Toast from 'react-native-toast-message';
 
 interface DataWithCache<T> {
   data: T;
@@ -29,6 +30,14 @@ const leagueSlice = createSlice({
     },
     getLeaguesFailure: draft => {
       draft.loading = false;
+      Toast.show({
+        topOffset: 80,
+        type: 'error',
+        position: 'top',
+        visibilityTime: 5000,
+        text1: 'Erro ao atualizar listagem das ligas.',
+        text2: 'Verifique sua conexão com a internet e tente novamente!',
+      });
     },
     getLeaguesDetailsRequest: (draft, action: PayloadAction<{ season: number; league: number }>) => {
       draft.selectedLeague = {} as LeagueDetails;
@@ -54,6 +63,14 @@ const leagueSlice = createSlice({
     },
     getLeaguesDetailsFailure: draft => {
       draft.loading = false;
+      Toast.show({
+        topOffset: 80,
+        type: 'error',
+        position: 'top',
+        visibilityTime: 5000,
+        text1: 'Erro ao atualizar dados da liga.',
+        text2: 'Verifique sua conexão com a internet e tente novamente!',
+      });
     },
   },
 });

@@ -3,6 +3,7 @@ import React from 'react';
 import { StatusBar } from 'react-native';
 import styled, { ThemeProvider } from 'styled-components/native';
 import { Provider } from 'react-redux';
+import Toast from 'react-native-toast-message';
 
 import { theme } from '@/theme';
 import { Routes } from '@/routes';
@@ -25,6 +26,7 @@ const App: React.FC = () => {
           <SafeAreaView>
             <StatusBar barStyle="light-content" />
             <Routes />
+            <Toast ref={ref => Toast.setRef(ref)} />
           </SafeAreaView>
         </ThemeProvider>
       </PersistGate>
