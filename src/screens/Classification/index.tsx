@@ -10,15 +10,12 @@ import { StandingsEntity } from '@/types/leagueDetails';
 import TableItem from '@/components/TableItem';
 import { useReduxDispatch, useReduxSelector } from '@/hooks';
 import { getLeaguesDetailsRequest } from '@/store/slices/league';
+import { HorizontalList } from '@/components/HorizontalList';
 import {
   Container,
   LeagueWrapper,
   LeagueLogoBackground,
   LeagueLogo,
-  Title,
-  FilterList,
-  FilterCard,
-  FilterCardText,
   LeagueList,
   ListSeparator,
   LeagueTitle,
@@ -43,19 +40,8 @@ const Classification: React.FC = () => {
     dispatch(getLeaguesDetailsRequest({ league: leagueId, season }));
   }, [dispatch, leagueId, season]);
 
-  const filters = useMemo(
-    () => [
-      { id: 'classification', name: 'Rank' },
-      { id: 'name', name: 'Nome' },
-      { id: 'wins', name: 'Vitorias' },
-      { id: 'draw', name: 'Empates' },
-      { id: 'losers', name: 'Derrotas' },
-      { id: 'golsDiff', name: 'Diferença em gols' },
-    ],
-    [],
-  );
-  const [selectedFilter, setSelectedFilter] = useState<string>('classification');
   const [searchText, setSearchText] = useState('');
+  const [selectedFilter, setSelectedFilter] = useState<string>('classification');
 
   const teamsFiltered = useMemo(() => {
     const filtered = league?.standings?.[0]?.filter(item => item?.team.name.includes(searchText)) || [];
@@ -102,45 +88,14 @@ const Classification: React.FC = () => {
     [navigate],
   );
 
-  const filterRenderItem = useCallback(
-    ({ item }: { item: { id: string; name: string }; index: number }) => (
-      <FilterCard
-        active={selectedFilter === item.id}
-        onPress={() => {
-          setSelectedFilter(item.id);
-        }}
-      >
-        <FilterCardText>{item.name}</FilterCardText>
-      </FilterCard>
-    ),
-    [selectedFilter],
-  );
-
-  const leaguesHeaderComponent = useCallback(
-    () => (
-      <>
-        <Title>Classificar por</Title>
-        <FilterList
-          data={filters}
-          horizontal
-          ItemSeparatorComponent={ListSeparator}
-          keyExtractor={item => `${item.id}`}
-          renderItem={filterRenderItem}
-        />
-        <TableItem
-          type="header"
-          classification=""
-          name="Nome"
-          points="Pts"
-          wins="V"
-          draw="E"
-          losers="D"
-          golsDiff="DG"
-        />
-      </>
-    ),
-    [filterRenderItem, filters],
-  );
+  const filters = [
+    { id: 'classification', name: 'Rank' },
+    { id: 'name', name: 'Nome' },
+    { id: 'wins', name: 'Vitorias' },
+    { id: 'draw', name: 'Empates' },
+    { id: 'losers', name: 'Derrotas' },
+    { id: 'golsDiff', name: 'Diferença em gols' },
+  ];
 
   return (
     <Container>
@@ -155,7 +110,16 @@ const Classification: React.FC = () => {
 
       <LeagueList
         data={teamsFiltered}
-        ListHeaderComponent={leaguesHeaderComponent}
+        ListHeaderComponent={
+          <HorizontalList
+            values={filters}
+            selected={selectedFilter}
+            onChangeValue={value => {
+              setSelectedFilter(value);
+            }}
+            title="Classificar por"
+          />
+        }
         ListEmptyComponent={
           <EmptyLeague title={loading ? 'Carregando...' : 'Não há nenhuma informação da liga selecionada'} />
         }

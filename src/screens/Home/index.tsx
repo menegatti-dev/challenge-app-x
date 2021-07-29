@@ -10,7 +10,8 @@ import { routeNames } from '@/routes/routeNames';
 import { useReduxDispatch, useReduxSelector } from '@/hooks';
 import { getLeaguesRequest } from '@/store/slices/league';
 import { getSeasonsRequest } from '@/store/slices/season';
-import { Container, Title, SeasonsList, SeasonsCard, SeasonsCardText, LeagueList, ListSeparator } from './styles';
+import { HorizontalList } from '@/components/HorizontalList';
+import { Container, Title, LeagueList, ListSeparator } from './styles';
 
 const Home: React.FC = () => {
   const { navigate } = useNavigation();
@@ -48,39 +49,29 @@ const Home: React.FC = () => {
     [navigate, selectedSeasons],
   );
 
-  const seasonRenderItem = useCallback(
-    ({ item }: { item: number }) => (
-      <SeasonsCard active={item === selectedSeasons} onPress={() => setSelectedSeasons(item)}>
-        <SeasonsCardText>{item}</SeasonsCardText>
-      </SeasonsCard>
-    ),
-    [selectedSeasons],
-  );
-
-  const leaguesHeaderComponent = useCallback(
-    () => (
-      <>
-        <Title>Selecione a temporada</Title>
-        <SeasonsList
-          data={[...seasons.slice().sort((a, b) => b - a)]}
-          horizontal
-          ItemSeparatorComponent={ListSeparator}
-          keyExtractor={item => `${item}`}
-          renderItem={seasonRenderItem}
-        />
-        <Title>Selecione a liga</Title>
-      </>
-    ),
-    [seasonRenderItem, seasons],
-  );
-
   return (
     <Container>
       <Search value={searchText} onChangeText={value => setSearchText(value)} placeholder="Procure sua liga..." />
 
       <LeagueList
         data={leaguesFiltered}
-        ListHeaderComponent={leaguesHeaderComponent}
+        ListHeaderComponent={
+          <>
+            <HorizontalList
+              values={[
+                ...seasons
+                  .slice()
+                  .sort((a, b) => b - a)
+                  .map(value => ({ id: `${value}`, name: `${value}` })),
+              ]}
+              title="Selecione a temporada"
+              selected={`${selectedSeasons}`}
+              onChangeValue={value => setSelectedSeasons(Number(value))}
+            />
+
+            <Title>Selecione a liga</Title>
+          </>
+        }
         ListEmptyComponent={
           <EmptyLeague title={loading ? 'Carregando...' : 'Não há nenhuma liga para a temporada selecionada'} />
         }
