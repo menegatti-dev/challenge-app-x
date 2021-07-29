@@ -28,7 +28,6 @@ export function* handleGetLeagues() {
     }
   } catch (error) {
     yield put(getLeaguesFailure());
-    console.error(error);
   }
 }
 
@@ -53,7 +52,6 @@ export function* handleGetLeagueDetails(action: ReturnType<typeof getLeaguesDeta
       if (response.data.response[0]?.league) {
         yield put(getLeaguesDetailsSuccess(response.data.response[0]?.league));
       }
-      yield put(getLeaguesDetailsFailure());
     }
   } catch (error) {
     yield put(getLeaguesDetailsFailure());
