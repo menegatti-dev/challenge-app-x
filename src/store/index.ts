@@ -5,10 +5,12 @@ import { persistReducer } from 'redux-persist';
 import thunk from 'redux-thunk';
 
 import { leagueReducer } from './slices/league';
+import { teamReducer } from './slices/team';
 import { seasonReducer } from './slices/season';
 
 const reducers = combineReducers({
   league: leagueReducer,
+  team: teamReducer,
   season: seasonReducer,
 });
 const persistConfig = {
