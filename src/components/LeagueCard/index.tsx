@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import { ChevronRight } from 'react-native-feather';
 import { useTheme } from 'styled-components';
 
@@ -17,7 +17,7 @@ const LeagueCard: React.FC<LeagueCardProps> = ({ country, logo, league, onPress 
   return (
     <Container onPress={onPress}>
       <WrapperLogo>
-        <Logo resizeMode="contain" source={{ uri: logo }} />
+        <Logo resizeMode={FastImage.resizeMode.contain} source={{ uri: logo }} />
       </WrapperLogo>
       <WrapperContent>
         <Title>{league}</Title>

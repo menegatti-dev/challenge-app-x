@@ -1,5 +1,6 @@
 import { RectButton } from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
+import FastImage from 'react-native-fast-image';
 
 export const Container = styled.View`
   flex-direction: row;
@@ -24,7 +25,7 @@ export const Text = styled.Text`
   font-family: 'Poppins-Medium';
 `;
 
-export const Logo = styled.Image`
+export const Logo = styled(FastImage)`
   width: 14px;
   height: 14px;
   margin-right: 3px;

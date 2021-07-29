@@ -1,8 +1,8 @@
-import { League } from '@/types/league';
 import { StandingsEntity } from '@/types/leagueDetails';
 import { FlatList } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
+import FastImage from 'react-native-fast-image';
 
 export const Container = styled.View`
   flex: 1;
@@ -29,7 +29,7 @@ export const LeagueLogoBackground = styled.View`
   margin-bottom: 8px;
 `;
 
-export const LeagueLogo = styled.Image`
+export const LeagueLogo = styled(FastImage)`
   width: 121px;
   height: 121px;
 `;

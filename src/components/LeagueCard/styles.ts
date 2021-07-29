@@ -1,5 +1,6 @@
 import { RectButton } from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
+import FastImage from 'react-native-fast-image';
 
 export const Container = styled(RectButton).attrs({
   shadowOpacity: 0.3,
@@ -24,7 +25,7 @@ export const WrapperLogo = styled.View`
   padding: 4px 6px;
 `;
 
-export const Logo = styled.Image`
+export const Logo = styled(FastImage)`
   width: 54px;
   height: 54px;
 `;

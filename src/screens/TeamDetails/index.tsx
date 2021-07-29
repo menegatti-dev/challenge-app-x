@@ -8,6 +8,7 @@ import teamJson from '@/mocks/team.json';
 import Header from '@/components/Header';
 import { getTeamsDetailsRequest } from '@/store/slices/team';
 import { useReduxDispatch, useReduxSelector } from '@/hooks';
+import FastImage from 'react-native-fast-image';
 import {
   Container,
   TeamWrapper,
@@ -63,7 +64,7 @@ const TeamDetails: React.FC = () => {
         <SectionTitle>Estádio</SectionTitle>
         <Line />
       </Row>
-      <VenueImage resizeMode="cover" source={{ uri: data?.venue?.image }} />
+      <VenueImage resizeMode={FastImage.resizeMode.cover} source={{ uri: data?.venue?.image }} />
       <Row>
         <Column>
           <Title>Nome</Title>

@@ -1,5 +1,6 @@
 import styled from 'styled-components/native';
 import { Dimensions } from 'react-native';
+import FastImage from 'react-native-fast-image';
 
 export const Container = styled.View`
   flex: 1;
@@ -41,7 +42,7 @@ export const TeamLogoBackground = styled.View`
   margin-bottom: 8px;
 `;
 
-export const TeamLogo = styled.Image`
+export const TeamLogo = styled(FastImage)`
   width: 121px;
   height: 121px;
 `;
@@ -65,7 +66,7 @@ export const SectionTitle = styled.Text`
   padding: 0px 8px;
 `;
 
-export const VenueImage = styled.Image`
+export const VenueImage = styled(FastImage)`
   width: 100%;
   height: ${(Dimensions.get('window').width / 16) * 9}px;
   border-radius: 20px;
