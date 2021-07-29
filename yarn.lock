@@ -5903,6 +5903,11 @@ react-native-dotenv@^3.1.1:
   dependencies:
     dotenv "^10.0.0"
 
+react-native-fast-image@^8.3.7:
+  version "8.3.7"
+  resolved "https://registry.yarnpkg.com/react-native-fast-image/-/react-native-fast-image-8.3.7.tgz#c4877de17903101f6d94b6736a4f7e5d7b019224"
+  integrity sha512-J++Ad04PTUe4YgjyGv63gfgV8Fz1gZKAgQHpblf8Z87D9dxfc8UfXHTPv9VLGdTJU4IzdTnQqzoFgDtWdsvBsQ==
+
 react-native-feather@^1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/react-native-feather/-/react-native-feather-1.1.2.tgz#da055f8bd56db74c1b5009dc470536a11ef1d5c4"
