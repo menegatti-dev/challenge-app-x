@@ -1,4 +1,4 @@
-<h1 align="center">Codeby Challenge</h1>
+<h1 align="center">Challenge App X</h1>
 <div align="center">
 
 ![React Native](https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
@@ -18,6 +18,7 @@ yarn install
 cd ios
 pod install
 cd ..
+cp .env.template .env
 yarn ios
 yarn start
 ```
@@ -27,6 +28,7 @@ yarn start
 ```bash
 yarn install
 yarn android
+cp .env.template .env
 yarn start
 ```
 
