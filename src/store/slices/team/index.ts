@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Team } from '@/types/team';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
@@ -14,13 +15,11 @@ const teamSlice = createSlice({
     teamsDetails: [] as DataWithCache<Team>[],
   },
   reducers: {
-    getTeamsDetailsRequest: (draft, action: PayloadAction<{ teamId: number }>) => {
-      console.log('getTeamsDetailsRequest');
+    getTeamsDetailsRequest: (draft, _action: PayloadAction<{ teamId: number }>) => {
       draft.selectedTeam = {} as Team;
       draft.loading = true;
     },
     getTeamsDetailsSuccess: (draft, action: PayloadAction<Team>) => {
-      console.log('getTeamsDetailsSuccess');
       const index = draft.teamsDetails.findIndex(item => item.data.team.id === action.payload.team.id);
 
       if (index >= 0) {
@@ -33,12 +32,10 @@ const teamSlice = createSlice({
       draft.loading = false;
     },
     getTeamsDetailsInCacheSuccess: (draft, action: PayloadAction<Team>) => {
-      console.log('getTeamsDetailsInCacheSuccess');
       draft.selectedTeam = action.payload;
       draft.loading = false;
     },
     getTeamsDetailsFailure: draft => {
-      console.log('getTeamsDetailsFailure');
       draft.loading = false;
     },
   },

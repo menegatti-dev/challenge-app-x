@@ -50,7 +50,6 @@ export function* handleGetLeagueDetails(action: ReturnType<typeof getLeaguesDeta
       const response = (yield call(api.get, `/standings?season=${season}&league=${league}`)) as AxiosResponse<{
         response: { league: LeagueDetails }[];
       }>;
-      console.log('league', JSON.stringify(response.data));
       if (response.data.response[0]?.league) {
         yield put(getLeaguesDetailsSuccess(response.data.response[0]?.league));
       }

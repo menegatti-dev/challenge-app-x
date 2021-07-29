@@ -13,21 +13,17 @@ const seasonSlice = createSlice({
   },
   reducers: {
     getSeasonsRequest: draft => {
-      console.log('getSeasonsRequest');
       draft.loading = true;
     },
     getSeasonsSuccess: (draft, action: PayloadAction<number[]>) => {
-      console.log('getSeasonsSuccess');
       draft.seasons.data = action.payload;
       draft.seasons.lastUpdate = new Date().toString();
       draft.loading = false;
     },
     getSeasonsInCacheSuccess: draft => {
-      console.log('getSeasonsInCacheSuccess');
       draft.loading = false;
     },
     getSeasonsFailure: draft => {
-      console.log('getSeasonsFailure');
       draft.loading = false;
     },
   },

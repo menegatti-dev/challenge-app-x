@@ -47,7 +47,7 @@ const TeamDetails: React.FC = () => {
         <TeamLogoBackground>
           <TeamLogo source={{ uri: data?.team?.logo }} />
         </TeamLogoBackground>
-        <TeamTitle>{`${data?.team?.name}`}</TeamTitle>
+        <TeamTitle>{`${data?.team?.name || ''}`}</TeamTitle>
       </TeamWrapper>
       <Row>
         <Column>
