@@ -6,18 +6,26 @@ import { LeagueCard } from '@/components/LeagueCard';
 import { Search } from '@/components/Search';
 import { EmptyLeague } from '@/components/EmptyLeague';
 import { routeNames } from '@/routes/routeNames';
-import leaguesJson from '@/mocks/leagues.json';
-import seasonsJson from '@/mocks/seasons.json';
 
+import { useReduxDispatch, useReduxSelector } from '@/hooks';
+import { getLeaguesRequest } from '@/store/slices/league';
+import { getSeasonsRequest } from '@/store/slices/season';
 import { Container, Title, SeasonsList, SeasonsCard, SeasonsCardText, LeagueList, ListSeparator } from './styles';
 
 const Home: React.FC = () => {
   const { navigate } = useNavigation();
+  const leagues = useReduxSelector(state => state.league.leagues.data);
+  const loading = useReduxSelector(state => state.league.loading);
+  const seasons = useReduxSelector(state => state.season.seasons.data);
 
-  const [leagues, setLeagues] = useState<League[]>([]);
-  const [seasons, setSeasons] = useState<number[]>([]);
   const [selectedSeasons, setSelectedSeasons] = useState<number>(new Date().getFullYear());
   const [searchText, setSearchText] = useState('');
+
+  const dispatch = useReduxDispatch();
+  useEffect(() => {
+    dispatch(getLeaguesRequest());
+    dispatch(getSeasonsRequest());
+  }, [dispatch]);
 
   const leaguesFiltered = useMemo(
     () => [
@@ -34,7 +42,7 @@ const Home: React.FC = () => {
         league={item.league.name}
         logo={item.league.logo}
         country={item.country.name}
-        onPress={() => navigate(routeNames.CLASSIFICATION, { season: selectedSeasons, league: item.league.id })}
+        onPress={() => navigate(routeNames.CLASSIFICATION, { season: selectedSeasons, leagueId: item.league.id })}
       />
     ),
     [navigate, selectedSeasons],
@@ -54,7 +62,7 @@ const Home: React.FC = () => {
       <>
         <Title>Selecione a temporada</Title>
         <SeasonsList
-          data={seasons.sort((a, b) => a + b)}
+          data={[...seasons.slice().sort((a, b) => b - a)]}
           horizontal
           ItemSeparatorComponent={ListSeparator}
           keyExtractor={item => `${item}`}
@@ -66,15 +74,6 @@ const Home: React.FC = () => {
     [seasonRenderItem, seasons],
   );
 
-  const loadData = () => {
-    setLeagues([...leaguesJson.response]);
-    setSeasons([...seasonsJson.response.sort((a: number, b: number) => b - a)]);
-  };
-
-  useEffect(() => {
-    loadData();
-  }, []);
-
   return (
     <Container>
       <Search value={searchText} onChangeText={value => setSearchText(value)} placeholder="Procure sua liga..." />
@@ -82,7 +81,9 @@ const Home: React.FC = () => {
       <LeagueList
         data={leaguesFiltered}
         ListHeaderComponent={leaguesHeaderComponent}
-        ListEmptyComponent={EmptyLeague}
+        ListEmptyComponent={
+          <EmptyLeague title={loading ? 'Carregando...' : 'Não há nenhuma liga para a temporada selecionada'} />
+        }
         keyExtractor={item => `${item.league.id}`}
         ItemSeparatorComponent={ListSeparator}
         renderItem={renderItem}
