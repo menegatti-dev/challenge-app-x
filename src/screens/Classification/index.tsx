@@ -4,11 +4,12 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { Search } from '@/components/Search';
 import { EmptyLeague } from '@/components/EmptyLeague';
 import { routeNames } from '@/routes/routeNames';
-import leagueJson from '@/mocks/league.json';
 
 import Header from '@/components/Header';
-import { LeagueDetails, StandingsEntity } from '@/types/leagueDetails';
+import { StandingsEntity } from '@/types/leagueDetails';
 import TableItem from '@/components/TableItem';
+import { useReduxDispatch, useReduxSelector } from '@/hooks';
+import { getLeaguesDetailsRequest } from '@/store/slices/league';
 import {
   Container,
   LeagueWrapper,
@@ -24,8 +25,8 @@ import {
 } from './styles';
 
 interface RouteParamsProps {
-  season: string;
-  leagueId: string;
+  season: number;
+  leagueId: number;
 }
 
 const Classification: React.FC = () => {
@@ -34,7 +35,13 @@ const Classification: React.FC = () => {
 
   const { season, leagueId } = route.params as RouteParamsProps;
 
-  const [league, setLeague] = useState<LeagueDetails>({} as LeagueDetails);
+  const league = useReduxSelector(state => state.league.selectedLeague);
+  const loading = useReduxSelector(state => state.league.loading);
+
+  const dispatch = useReduxDispatch();
+  useEffect(() => {
+    dispatch(getLeaguesDetailsRequest({ league: leagueId, season }));
+  }, [dispatch, leagueId, season]);
 
   const filters = useMemo(
     () => [
@@ -51,12 +58,13 @@ const Classification: React.FC = () => {
   const [searchText, setSearchText] = useState('');
 
   const teamsFiltered = useMemo(() => {
-    const filtered = league?.standings?.filter(item => item.team.name.includes(searchText)) || [];
+    const filtered = league?.standings?.[0]?.filter(item => item?.team.name.includes(searchText)) || [];
     switch (selectedFilter) {
       case 'classification':
         return filtered.sort((a, b) => a.rank - b.rank);
 
       case 'name':
+        // eslint-disable-next-line no-nested-ternary
         return filtered.sort((a, b) => (b.team.name < a.team.name ? 1 : b.team.name > a.team.name ? -1 : 0));
 
       case 'wins':
@@ -134,14 +142,6 @@ const Classification: React.FC = () => {
     [filterRenderItem, filters],
   );
 
-  const loadData = () => {
-    setLeague({ ...leagueJson.response[0].league });
-  };
-
-  useEffect(() => {
-    loadData();
-  }, []);
-
   return (
     <Container>
       <Header countryName={league?.country} countryLogo={league?.flag} />
@@ -149,14 +149,16 @@ const Classification: React.FC = () => {
         <LeagueLogoBackground>
           <LeagueLogo source={{ uri: league?.logo }} />
         </LeagueLogoBackground>
-        <LeagueTitle>{`${league?.name} ${league?.season}`}</LeagueTitle>
+        <LeagueTitle>{`${league?.name || ''} ${league?.season || ''}`}</LeagueTitle>
       </LeagueWrapper>
-      <Search value={searchText} onChangeText={value => setSearchText(value)} placeholder="Procure sua liga..." />
+      <Search value={searchText} onChangeText={value => setSearchText(value)} placeholder="Procure seu time..." />
 
       <LeagueList
         data={teamsFiltered}
         ListHeaderComponent={leaguesHeaderComponent}
-        ListEmptyComponent={EmptyLeague}
+        ListEmptyComponent={
+          <EmptyLeague title={loading ? 'Carregando...' : 'Não há nenhuma informação da liga selecionada'} />
+        }
         keyExtractor={item => `${item.team.id}`}
         ItemSeparatorComponent={ListSeparator}
         renderItem={renderItem}
