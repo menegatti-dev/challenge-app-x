@@ -5,7 +5,7 @@ export interface LeagueDetails {
   logo: string;
   flag: string;
   season: number;
-  standings: StandingsEntity[];
+  standings: StandingsEntity[][];
 }
 export interface StandingsEntity {
   rank: number;
