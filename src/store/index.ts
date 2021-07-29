@@ -4,7 +4,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { persistReducer } from 'redux-persist';
 import thunk from 'redux-thunk';
 
-const reducers = combineReducers({});
+import { leagueReducer } from './slices/league';
+
+const reducers = combineReducers({
+  league: leagueReducer,
+});
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
