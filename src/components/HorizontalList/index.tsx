@@ -1,4 +1,3 @@
-import TableItem from '@/components/TableItem';
 import React, { useCallback, useRef } from 'react';
 import { FlatList } from 'react-native';
 import { FilterCard, FilterCardText, FilterList, ListSeparator, Title } from './styles';
@@ -10,7 +9,7 @@ interface HorizontalListProps {
   title: string;
 }
 
-const HorizontalList: React.FC<HorizontalListProps> = ({ onChangeValue, selected, values, title }) => {
+const HorizontalList: React.FC<HorizontalListProps> = ({ onChangeValue, selected, values, title, children }) => {
   const refFilter = useRef<FlatList<{ id: string; name: string }>>(null);
 
   const renderItem = useCallback(
@@ -39,7 +38,7 @@ const HorizontalList: React.FC<HorizontalListProps> = ({ onChangeValue, selected
         keyExtractor={item => `${item.id}`}
         renderItem={renderItem}
       />
-      <TableItem type="header" classification="" name="Nome" points="Pts" wins="V" draw="E" losers="D" golsDiff="DG" />
+      {children}
     </>
   );
 };

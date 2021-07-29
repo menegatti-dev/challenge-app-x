@@ -4,7 +4,6 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { Search } from '@/components/Search';
 import { EmptyLeague } from '@/components/EmptyLeague';
 import { routeNames } from '@/routes/routeNames';
-
 import Header from '@/components/Header';
 import { StandingsEntity } from '@/types/leagueDetails';
 import TableItem from '@/components/TableItem';
@@ -118,7 +117,18 @@ const Classification: React.FC = () => {
               setSelectedFilter(value);
             }}
             title="Classificar por"
-          />
+          >
+            <TableItem
+              type="header"
+              classification=""
+              name="Nome"
+              points="Pts"
+              wins="V"
+              draw="E"
+              losers="D"
+              golsDiff="DG"
+            />
+          </HorizontalList>
         }
         ListEmptyComponent={
           <EmptyLeague title={loading ? 'Carregando...' : 'Não há nenhuma informação da liga selecionada'} />

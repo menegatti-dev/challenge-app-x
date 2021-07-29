@@ -56,21 +56,19 @@ const Home: React.FC = () => {
       <LeagueList
         data={leaguesFiltered}
         ListHeaderComponent={
-          <>
-            <HorizontalList
-              values={[
-                ...seasons
-                  .slice()
-                  .sort((a, b) => b - a)
-                  .map(value => ({ id: `${value}`, name: `${value}` })),
-              ]}
-              title="Selecione a temporada"
-              selected={`${selectedSeasons}`}
-              onChangeValue={value => setSelectedSeasons(Number(value))}
-            />
-
+          <HorizontalList
+            values={[
+              ...seasons
+                .slice()
+                .sort((a, b) => b - a)
+                .map(value => ({ id: `${value}`, name: `${value}` })),
+            ]}
+            title="Selecione a temporada"
+            selected={`${selectedSeasons}`}
+            onChangeValue={value => setSelectedSeasons(Number(value))}
+          >
             <Title>Selecione a liga</Title>
-          </>
+          </HorizontalList>
         }
         ListEmptyComponent={
           <EmptyLeague title={loading ? 'Carregando...' : 'Não há nenhuma liga para a temporada selecionada'} />
